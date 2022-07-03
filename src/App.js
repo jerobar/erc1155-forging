@@ -9,7 +9,7 @@ import {
   metaMaskOnChainChanged,
   metaMaskOnAccountsChanged,
   metaMaskOnDisconnect,
-  fetchCurrentAccount,
+  requestAccounts,
   fetchMaticBalance
 } from './stores/metamask-slice'
 import { userTokenBalancesUpdated } from './stores/token-slice'
@@ -22,7 +22,7 @@ import { BurnTokens } from './components/BurnTokens'
 
 export function App() {
   const contractRef = useRef(null)
-  const { chainIsPolygon, metaMaskIsConnected, currentAccount } = useSelector(
+  const { metaMaskIsInstalled, chainIsPolygon, currentAccount } = useSelector(
     (state) => state.metaMask
   )
   const { tokenIds } = useSelector((state) => state.token)
@@ -77,13 +77,12 @@ export function App() {
     dispatchMetaMaskOnDisconnect
   ])
 
-  // Fetch current MetaMask account address
+  // Fetch current MetaMask account addresses
   useEffect(() => {
-    if (metaMaskIsConnected && chainIsPolygon) {
-      console.log('metaMaskIsConnected && chainIsPolygon passed...')
-      dispatch(fetchCurrentAccount())
+    if (metaMaskIsInstalled) {
+      dispatch(requestAccounts())
     }
-  }, [metaMaskIsConnected, chainIsPolygon, dispatch, currentAccount])
+  }, [metaMaskIsInstalled, dispatch])
 
   // Fetch MATIC balance of current account
   useEffect(() => {

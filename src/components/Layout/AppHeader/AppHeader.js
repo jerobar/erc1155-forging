@@ -7,13 +7,14 @@ import { ConnectButton } from '../../ConnectButton'
 import { UserBalances } from '../../UserBalances'
 
 export function AppHeader() {
-  const { metaMaskIsInstalled, metaMaskIsConnected, chainIsPolygon } =
-    useSelector((state) => state.metaMask)
+  const { metaMaskIsInstalled, currentAccount, chainIsPolygon } = useSelector(
+    (state) => state.metaMask
+  )
 
   // Whether to render a connect button, based on MetaMask configuration
   const showConnectButton = useMemo(() => {
-    return !(metaMaskIsInstalled && metaMaskIsConnected && chainIsPolygon)
-  }, [metaMaskIsInstalled, metaMaskIsConnected, chainIsPolygon])
+    return !(metaMaskIsInstalled && currentAccount && chainIsPolygon)
+  }, [metaMaskIsInstalled, currentAccount, chainIsPolygon])
 
   return (
     <Header p={'md'}>

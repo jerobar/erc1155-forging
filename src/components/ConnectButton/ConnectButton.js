@@ -7,21 +7,22 @@ import { ConnectToMetaMaskButton } from './ConnectToMetaMaskButton'
 import { SwitchToPolygonButton } from './SwitchToPolygonButton'
 
 export function ConnectButton() {
-  const { metaMaskIsInstalled, metaMaskIsConnected, chainIsPolygon } =
-    useSelector((state) => state.metaMask)
+  const { metaMaskIsInstalled, currentAccount, chainIsPolygon } = useSelector(
+    (state) => state.metaMask
+  )
 
   // Render appropriate connect button, based on MetaMask configuration
   const connectButton = useMemo(() => {
     if (!metaMaskIsInstalled) {
       return <InstallMetaMaskButton />
-    } else if (!metaMaskIsConnected) {
+    } else if (!currentAccount) {
       return <ConnectToMetaMaskButton />
     } else if (!chainIsPolygon) {
       return <SwitchToPolygonButton />
     } else {
       return null
     }
-  }, [metaMaskIsInstalled, metaMaskIsConnected, chainIsPolygon])
+  }, [metaMaskIsInstalled, currentAccount, chainIsPolygon])
 
   return connectButton
 }

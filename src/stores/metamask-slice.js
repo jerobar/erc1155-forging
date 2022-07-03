@@ -3,13 +3,18 @@ import { ethers } from 'ethers'
 
 import { metaMaskUtils } from '../utils/metamask-utils'
 
-export const fetchCurrentAccount = createAsyncThunk(
-  'metaMask/fetchCurrentAccount',
+export const requestAccounts = createAsyncThunk(
+  'metaMask/requestAccounts',
   async () => {
-    const accounts = await window.ethereum.request({ method: 'eth_accounts' })
-    console.log('fetchCurrentAccount accounts:', accounts)
+    try {
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts'
+      })
 
-    return accounts[0]
+      return accounts
+    } catch (error) {
+      console.error(error)
+    }
   }
 )
 
@@ -58,8 +63,10 @@ export const metaMaskSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCurrentAccount.fulfilled, (state, action) => {
-        state.currentAccount = action.payload
+      .addCase(requestAccounts.fulfilled, (state, action) => {
+        if (action.payload.length > 0) {
+          state.currentAccount = action.payload[0]
+        }
       })
       .addCase(fetchMaticBalance.fulfilled, (state, action) => {
         state.maticBalance = ethers.utils.formatEther(action.payload)
