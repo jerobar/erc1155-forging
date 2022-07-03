@@ -9,7 +9,7 @@ import {
   metaMaskOnChainChanged,
   metaMaskOnAccountsChanged,
   metaMaskOnDisconnect,
-  requestAccounts,
+  // requestAccounts,
   fetchMaticBalance
 } from './stores/metamask-slice'
 import { userTokenBalancesUpdated } from './stores/token-slice'
@@ -22,14 +22,11 @@ import { BurnTokens } from './components/BurnTokens'
 
 export function App() {
   const contractRef = useRef(null)
-  const { metaMaskIsInstalled, chainIsPolygon, currentAccount } = useSelector(
+  const { currentAccount, chainIsPolygon } = useSelector(
     (state) => state.metaMask
   )
   const { tokenIds } = useSelector((state) => state.token)
   const dispatch = useDispatch()
-
-  // e.g. "Success!" or "Error: "?
-  //const [transactionSuccess, setTransactionSuccess] = useState(null)
 
   // Handle MetaMask connect event
   const dispatchMetaMaskOnConnect = useCallback(() => {
@@ -78,11 +75,11 @@ export function App() {
   ])
 
   // Fetch current MetaMask account addresses
-  useEffect(() => {
-    if (metaMaskIsInstalled) {
-      dispatch(requestAccounts())
-    }
-  }, [metaMaskIsInstalled, dispatch])
+  // useEffect(() => {
+  //   if (metaMaskIsInstalled) {
+  //     dispatch(requestAccounts())
+  //   }
+  // }, [metaMaskIsInstalled, dispatch])
 
   // Fetch MATIC balance of current account
   useEffect(() => {
@@ -130,10 +127,10 @@ export function App() {
     <AppShell header={<AppHeader />} padding={'md'}>
       <Container>
         <Text>View collection on OpenSea(link)!</Text>
-        {!chainIsPolygon && <PleaseConnect />}
+        {(!currentAccount || !chainIsPolygon) && <PleaseConnect />}
         <Space h={20} />
         <MintTokens contractRef={contractRef} />
-        {chainIsPolygon && (
+        {currentAccount && chainIsPolygon && (
           <>
             <Divider
               color={'#dbdbdb'}

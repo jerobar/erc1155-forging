@@ -29,6 +29,7 @@ function isInstalled(ethereum) {
 
 async function connect(ethereum) {
   try {
+    console.log('trying...')
     const accounts = await ethereum.request({
       method: 'eth_requestAccounts'
     })
