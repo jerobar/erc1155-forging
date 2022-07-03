@@ -1,6 +1,7 @@
 import { useState, useMemo, useCallback } from 'react'
 
 import { useSelector, useDispatch } from 'react-redux'
+import { showNotification } from '@mantine/notifications'
 import {
   Grid,
   Center,
@@ -40,12 +41,24 @@ export function MintTokens(props) {
           const res = await contractRef.current.mint(currentAccount, tokenId, 1)
           res.wait(1)
           dispatch(userAddedToken({ tokenId }))
+          showNotification({
+            title: 'Success!',
+            message: `Successfully minted token "${tokens[tokenId].name}"!`,
+            color: 'green',
+            autoClose: 7000
+          })
         } catch (error) {
           console.error(error)
+          showNotification({
+            title: 'Whoops!',
+            message: 'Something went wrong...',
+            color: 'red',
+            autoClose: 7000
+          })
         }
       }
     },
-    [contractRef, currentAccount, dispatch]
+    [contractRef, currentAccount, dispatch, tokens]
   )
 
   // Open trade modal

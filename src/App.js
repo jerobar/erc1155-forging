@@ -126,7 +126,10 @@ export function App() {
   return (
     <AppShell header={<AppHeader />} padding={'md'}>
       <Container>
-        <Text>View collection on OpenSea(link)!</Text>
+        <Text>
+          View collection on OpenSea(link)! Browse verified contract on
+          ________.
+        </Text>
         {(!currentAccount || !chainIsPolygon) && <PleaseConnect />}
         <Space h={20} />
         <MintTokens contractRef={contractRef} />

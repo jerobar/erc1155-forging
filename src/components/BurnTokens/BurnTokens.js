@@ -13,6 +13,7 @@ import {
   SimpleGrid,
   Button
 } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 
 import { userRemovedTokens } from '../../stores/token-slice'
 
@@ -83,8 +84,21 @@ export function BurnTokens(props) {
           res.wait(1)
           dispatch(userRemovedTokens({ tokenIds: [tokenIdToBurn] }))
           setTokenToBurn(null)
+          showNotification({
+            title: 'Success!',
+            message: `Successfully burned token "${tokens[tokenIdToBurn].name}"!`,
+            color: 'green',
+            autoClose: 7000
+          })
         } catch (error) {
           console.error(error)
+
+          showNotification({
+            title: 'Whoops!',
+            message: 'Something went wrong...',
+            color: 'red',
+            autoClose: 7000
+          })
         }
       }
     },
