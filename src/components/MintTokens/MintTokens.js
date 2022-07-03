@@ -27,7 +27,7 @@ export function MintTokens(props) {
   const [tokenToTradeFor, setTokenToTradeFor] = useState(null)
   const dispatch = useDispatch()
 
-  // Get total tokens held by user
+  // Get sum of tokens held by user
   const userTokenCount = useMemo(() => {
     return tokenUtils.sumUserTokens(tokens)
   }, [tokens])
