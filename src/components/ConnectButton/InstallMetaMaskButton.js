@@ -7,6 +7,7 @@ export function InstallMetaMaskButton() {
 
   return (
     <Button
+      component={'a'}
       href={'https://metamask.io/download/'}
       target={'_blank'}
       alt={textContent}

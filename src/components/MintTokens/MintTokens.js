@@ -51,7 +51,8 @@ export function MintTokens(props) {
           console.error(error)
           showNotification({
             title: 'Whoops!',
-            message: 'Something went wrong...',
+            message:
+              'Something went wrong. Perhaps a previous transaction has not yet finalized?',
             color: 'red',
             autoClose: 7000
           })

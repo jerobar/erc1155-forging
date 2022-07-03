@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -84,6 +84,17 @@ export function ForgeTokens(props) {
   const [tokensToForge, setTokensToForge] = useState([])
   const dispatch = useDispatch()
 
+  // Determine whether user has tokens to forge
+  const userHasForgeableTokens = useMemo(() => {
+    let forgeableTokenCount = 0
+
+    for (let i = 0; i < forgeableTokenIds.length; i++) {
+      forgeableTokenCount += tokens[forgeableTokenIds[i]].userSupply
+    }
+
+    return forgeableTokenCount > 0
+  }, [forgeableTokenIds, tokens])
+
   const handleForgeButtonClick = useCallback(async () => {
     if (contractRef.current && currentAccount) {
       try {
@@ -111,13 +122,21 @@ export function ForgeTokens(props) {
 
         showNotification({
           title: 'Whoops!',
-          message: 'Something went wrong...',
+          message:
+            'Something went wrong. Perhaps a previous transaction has not yet finalized?',
           color: 'red',
           autoClose: 7000
         })
       }
     }
-  }, [contractRef, currentAccount, tokensToForge, dispatch, setTokensToForge])
+  }, [
+    contractRef,
+    currentAccount,
+    tokensToForge,
+    dispatch,
+    setTokensToForge,
+    tokens
+  ])
 
   return (
     <>
@@ -129,22 +148,28 @@ export function ForgeTokens(props) {
           >
             Forge Tokens
           </Title>
-          <SimpleGrid cols={3}>
-            {forgeableTokenIds
-              .filter((tokenId) => tokens[tokenId].userSupply > 0)
-              .map((tokenId) => {
-                const token = tokens[tokenId]
+          {userHasForgeableTokens ? (
+            <SimpleGrid cols={3}>
+              {forgeableTokenIds
+                .filter((tokenId) => tokens[tokenId].userSupply > 0)
+                .map((tokenId) => {
+                  const token = tokens[tokenId]
 
-                return (
-                  <SelectableToken
-                    key={tokenId}
-                    token={token}
-                    tokensToForge={tokensToForge}
-                    setTokensToForge={setTokensToForge}
-                  />
-                )
-              })}
-          </SimpleGrid>
+                  return (
+                    <SelectableToken
+                      key={tokenId}
+                      token={token}
+                      tokensToForge={tokensToForge}
+                      setTokensToForge={setTokensToForge}
+                    />
+                  )
+                })}
+            </SimpleGrid>
+          ) : (
+            <div style={{ textAlign: 'center' }}>
+              You have no tokens to forge!
+            </div>
+          )}
           <Button
             disabled={tokensToForge.length < 2}
             fullWidth

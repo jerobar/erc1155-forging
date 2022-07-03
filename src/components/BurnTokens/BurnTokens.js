@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -72,6 +72,17 @@ export function BurnTokens(props) {
   const [tokenToBurn, setTokenToBurn] = useState(null)
   const dispatch = useDispatch()
 
+  // Determine whether user has forged tokens
+  const userHasForgedTokens = useMemo(() => {
+    let forgedTokenCount = 0
+
+    for (let i = 0; i < forgedTokenIds.length; i++) {
+      forgedTokenCount += tokens[forgedTokenIds[i]].userSupply
+    }
+
+    return forgedTokenCount > 0
+  }, [forgedTokenIds, tokens])
+
   const handleBurnButtonClick = useCallback(
     async (tokenIdToBurn) => {
       if (contractRef.current && currentAccount) {
@@ -95,14 +106,15 @@ export function BurnTokens(props) {
 
           showNotification({
             title: 'Whoops!',
-            message: 'Something went wrong...',
+            message:
+              'Something went wrong. Perhaps a previous transaction has not yet finalized?',
             color: 'red',
             autoClose: 7000
           })
         }
       }
     },
-    [contractRef, currentAccount, dispatch, setTokenToBurn]
+    [contractRef, currentAccount, dispatch, setTokenToBurn, tokens]
   )
 
   return (
@@ -110,22 +122,26 @@ export function BurnTokens(props) {
       <Title order={2} style={{ marginBottom: '14px', textAlign: 'center' }}>
         Burn Forged Tokens
       </Title>
-      <SimpleGrid cols={3}>
-        {forgedTokenIds
-          .filter((tokenId) => tokens[tokenId].userSupply > 0)
-          .map((tokenId) => {
-            const token = tokens[tokenId]
+      {userHasForgedTokens ? (
+        <SimpleGrid cols={3}>
+          {forgedTokenIds
+            .filter((tokenId) => tokens[tokenId].userSupply > 0)
+            .map((tokenId) => {
+              const token = tokens[tokenId]
 
-            return (
-              <SelectableToken
-                key={tokenId}
-                token={token}
-                tokenToBurn={tokenToBurn}
-                setTokenToBurn={setTokenToBurn}
-              />
-            )
-          })}
-      </SimpleGrid>
+              return (
+                <SelectableToken
+                  key={tokenId}
+                  token={token}
+                  tokenToBurn={tokenToBurn}
+                  setTokenToBurn={setTokenToBurn}
+                />
+              )
+            })}
+        </SimpleGrid>
+      ) : (
+        <div>You have no forged tokens!</div>
+      )}
       <Button
         disabled={!tokenToBurn}
         fullWidth

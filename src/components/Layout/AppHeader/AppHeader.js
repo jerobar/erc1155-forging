@@ -18,7 +18,7 @@ export function AppHeader() {
 
   return (
     <Header p={'md'}>
-      <Container fluid>
+      <Container>
         <Grid justify={'space-between'}>
           <Grid.Col span={6}>
             <Group style={{ gap: '6px' }}>

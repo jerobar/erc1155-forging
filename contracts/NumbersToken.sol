@@ -18,7 +18,7 @@ contract NumbersToken is ERC1155, IERC1155Receiver {
 
     string public name;
 
-    uint256 private constant ONE = 0;
+    uint256 private constant ONE = 0; // 1 - Try making these public
     uint256 private constant TWO = 1;
     uint256 private constant THREE = 2;
     uint256 private constant FOUR = 3;

@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = '0xe955A039f8D9B18C8725d09Fc92881004D40B899'
+export const CONTRACT_ADDRESS = '0x68D42cfde88E385a1Db85510691156AC6f643477'
 
 export const CONTRACT_ABI = [
   { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },

@@ -2,14 +2,21 @@ import { useRef, useEffect, useCallback } from 'react'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { ethers } from 'ethers'
-import { AppShell, Container, Text, Space, Divider, Grid } from '@mantine/core'
+import {
+  AppShell,
+  Container,
+  Text,
+  Anchor,
+  Space,
+  Divider,
+  Grid
+} from '@mantine/core'
 
 import {
   metaMaskOnConnect,
   metaMaskOnChainChanged,
   metaMaskOnAccountsChanged,
   metaMaskOnDisconnect,
-  // requestAccounts,
   fetchMaticBalance
 } from './stores/metamask-slice'
 import { userTokenBalancesUpdated } from './stores/token-slice'
@@ -22,7 +29,7 @@ import { BurnTokens } from './components/BurnTokens'
 
 export function App() {
   const contractRef = useRef(null)
-  const { currentAccount, chainIsPolygon } = useSelector(
+  const { metaMaskIsInstalled, currentAccount, chainIsPolygon } = useSelector(
     (state) => state.metaMask
   )
   const { tokenIds } = useSelector((state) => state.token)
@@ -50,36 +57,35 @@ export function App() {
 
   // Attach/detach listeners for MetaMask events
   useEffect(() => {
-    window.ethereum.on('connect', dispatchMetaMaskOnConnect)
-    window.ethereum.on('chainChanged', dispatchMetaMaskOnChainChanged)
-    window.ethereum.on('accountsChanged', dispatchMetaMaskOnAccountsChanged)
-    window.ethereum.on('disconnect', dispatchMetaMaskOnDisconnect)
+    if (metaMaskIsInstalled) {
+      window.ethereum.on('connect', dispatchMetaMaskOnConnect)
+      window.ethereum.on('chainChanged', dispatchMetaMaskOnChainChanged)
+      window.ethereum.on('accountsChanged', dispatchMetaMaskOnAccountsChanged)
+      window.ethereum.on('disconnect', dispatchMetaMaskOnDisconnect)
 
-    return () => {
-      window.ethereum.removeListener('connect', dispatchMetaMaskOnConnect)
-      window.ethereum.removeListener(
-        'chainChanged',
-        dispatchMetaMaskOnChainChanged
-      )
-      window.ethereum.removeListener(
-        'accountsChanged',
-        dispatchMetaMaskOnAccountsChanged
-      )
-      window.ethereum.removeListener('disconnect', dispatchMetaMaskOnDisconnect)
+      return () => {
+        window.ethereum.removeListener('connect', dispatchMetaMaskOnConnect)
+        window.ethereum.removeListener(
+          'chainChanged',
+          dispatchMetaMaskOnChainChanged
+        )
+        window.ethereum.removeListener(
+          'accountsChanged',
+          dispatchMetaMaskOnAccountsChanged
+        )
+        window.ethereum.removeListener(
+          'disconnect',
+          dispatchMetaMaskOnDisconnect
+        )
+      }
     }
   }, [
+    metaMaskIsInstalled,
     dispatchMetaMaskOnConnect,
     dispatchMetaMaskOnChainChanged,
     dispatchMetaMaskOnAccountsChanged,
     dispatchMetaMaskOnDisconnect
   ])
-
-  // Fetch current MetaMask account addresses
-  // useEffect(() => {
-  //   if (metaMaskIsInstalled) {
-  //     dispatch(requestAccounts())
-  //   }
-  // }, [metaMaskIsInstalled, dispatch])
 
   // Fetch MATIC balance of current account
   useEffect(() => {
@@ -127,8 +133,21 @@ export function App() {
     <AppShell header={<AppHeader />} padding={'md'}>
       <Container>
         <Text>
-          View collection on OpenSea(link)! Browse verified contract on
-          ________.
+          View collection on{' '}
+          <Anchor
+            href={`https://testnets.opensea.io/collection/numbers-zmuhntnkld`}
+            target={'_blank'}
+          >
+            OpenSea
+          </Anchor>
+          ! Browse verified contract on{' '}
+          <Anchor
+            href={`https://rinkeby.etherscan.io/address/${CONTRACT_ADDRESS}#code`}
+            target={'_blank'}
+          >
+            Etherscan
+          </Anchor>
+          .
         </Text>
         {(!currentAccount || !chainIsPolygon) && <PleaseConnect />}
         <Space h={20} />
