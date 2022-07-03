@@ -8,7 +8,7 @@ export function ConnectToMetaMaskButton() {
 
   return (
     <Button
-      onClick={() => metaMaskUtils.connectToMetaMask(window.ethereum)}
+      onClick={() => metaMaskUtils.connect(window.ethereum)}
       alt={textContent}
       color={'cyan'}
       leftIcon={<MetaMaskIcon />}
