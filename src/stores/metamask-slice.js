@@ -7,6 +7,7 @@ export const fetchCurrentAccount = createAsyncThunk(
   'metaMask/fetchCurrentAccount',
   async () => {
     const accounts = await window.ethereum.request({ method: 'eth_accounts' })
+    console.log('fetchCurrentAccount accounts:', accounts)
 
     return accounts[0]
   }
