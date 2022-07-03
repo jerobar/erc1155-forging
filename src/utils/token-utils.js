@@ -3,7 +3,7 @@ export const TOKENS = {
     id: 0,
     name: 'Number One',
     description: 'Literally just the number one.',
-    image: '/numbers-images/0.png',
+    image: 'https://appsecpleb.com/numbers-images/0.png',
     metadata: 'ipfs://QmatCE4zpiVEHnjQar8c4DUx8quXzDj2YtcycXUawuH6qz/0.json',
     userSupply: 0
   },
@@ -11,7 +11,7 @@ export const TOKENS = {
     id: 1,
     name: 'Number Two',
     description: 'Literally just the number two.',
-    image: '/numbers-images/1.png',
+    image: 'https://appsecpleb.com/numbers-images/1.png',
     metadata: 'ipfs://QmatCE4zpiVEHnjQar8c4DUx8quXzDj2YtcycXUawuH6qz/1.json',
     userSupply: 0
   },
@@ -19,7 +19,7 @@ export const TOKENS = {
     id: 2,
     name: 'Number Three',
     description: 'Literally just the number three.',
-    image: '/numbers-images/2.png',
+    image: 'https://appsecpleb.com/numbers-images/2.png',
     metadata: 'ipfs://QmatCE4zpiVEHnjQar8c4DUx8quXzDj2YtcycXUawuH6qz/2.json',
     userSupply: 0
   },
@@ -27,7 +27,7 @@ export const TOKENS = {
     id: 3,
     name: 'Number Four',
     description: 'Literally just the number four.',
-    image: '/numbers-images/3.png',
+    image: 'https://appsecpleb.com/numbers-images/3.png',
     metadata: 'ipfs://QmatCE4zpiVEHnjQar8c4DUx8quXzDj2YtcycXUawuH6qz/3.json',
     userSupply: 0
   },
@@ -35,7 +35,7 @@ export const TOKENS = {
     id: 4,
     name: 'Number Five',
     description: 'Literally just the number five.',
-    image: '/numbers-images/4.png',
+    image: 'https://appsecpleb.com/numbers-images/4.png',
     metadata: 'ipfs://QmatCE4zpiVEHnjQar8c4DUx8quXzDj2YtcycXUawuH6qz/4.json',
     userSupply: 0
   },
@@ -43,7 +43,7 @@ export const TOKENS = {
     id: 5,
     name: 'Number Six',
     description: 'Literally just the number six.',
-    image: '/numbers-images/5.png',
+    image: 'https://appsecpleb.com/numbers-images/5.png',
     metadata: 'ipfs://QmatCE4zpiVEHnjQar8c4DUx8quXzDj2YtcycXUawuH6qz/5.json',
     userSupply: 0
   },
@@ -51,7 +51,7 @@ export const TOKENS = {
     id: 6,
     name: 'Number Seven',
     description: 'Literally just the number seven.',
-    image: '/numbers-images/6.png',
+    image: 'https://appsecpleb.com/numbers-images/6.png',
     metadata: 'ipfs://QmatCE4zpiVEHnjQar8c4DUx8quXzDj2YtcycXUawuH6qz/6.json',
     userSupply: 0
   }
@@ -83,7 +83,7 @@ function tokenIdToForge(tokens) {
   const tokenIdSum = tokens[0] + tokens[1]
 
   if (tokenIdSum === 1) {
-    // ids: 0 + 1
+    // ids 0 + 1
     return 3
   } else if (tokenIdSum === 2) {
     // ids 0 + 2
