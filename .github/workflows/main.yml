@@ -27,4 +27,4 @@ jobs:
           server: ftp.appsecpleb.com
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
-          local-dir: ./dist/
+          local-dir: ./erc1155-forging/
