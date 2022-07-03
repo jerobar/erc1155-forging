@@ -22,7 +22,7 @@ import { BurnTokens } from './components/BurnTokens'
 
 export function App() {
   const contractRef = useRef(null)
-  const { chainIsPolygon, currentAccount } = useSelector(
+  const { chainIsPolygon, metaMaskIsConnected, currentAccount } = useSelector(
     (state) => state.metaMask
   )
   const { tokenIds } = useSelector((state) => state.token)
@@ -79,10 +79,11 @@ export function App() {
 
   // Fetch current MetaMask account address
   useEffect(() => {
-    if (chainIsPolygon) {
+    if (metaMaskIsConnected && chainIsPolygon) {
+      console.log('metaMaskIsConnected && chainIsPolygon passed...')
       dispatch(fetchCurrentAccount())
     }
-  }, [chainIsPolygon, dispatch, currentAccount])
+  }, [metaMaskIsConnected, chainIsPolygon, dispatch, currentAccount])
 
   // Fetch MATIC balance of current account
   useEffect(() => {
