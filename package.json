@@ -1,5 +1,6 @@
 {
-  "name": "erc1155",
+  "name": "erc1155-forging",
+  "homepage": "/erc1155-forging",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
