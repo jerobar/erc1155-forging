@@ -88,7 +88,7 @@ export function MintTokens(props) {
                   <Button
                     variant="gradient"
                     gradient={{ from: 'teal', to: 'lime' }}
-                    disabled={!chainIsPolygon}
+                    disabled={!currentAccount || !chainIsPolygon}
                     fullWidth
                     onClick={() => handleMintButtonClick(tokenId)}
                     style={{ marginBottom: '6px' }}
@@ -98,7 +98,11 @@ export function MintTokens(props) {
                   <Button
                     variant="gradient"
                     gradient={{ from: 'indigo', to: 'cyan' }}
-                    disabled={!chainIsPolygon ? true : userTokenCount === 0}
+                    disabled={
+                      !currentAccount || !chainIsPolygon
+                        ? true
+                        : userTokenCount === 0
+                    }
                     fullWidth
                     onClick={() => handleTradeButtonClick(tokenId)}
                     style={{ marginBottom: '8px' }}
