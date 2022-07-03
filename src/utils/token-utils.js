@@ -83,7 +83,7 @@ function tokenIdToForge(tokens) {
   const tokenIdSum = tokens[0] + tokens[1]
 
   if (tokenIdSum === 1) {
-    // ids 0 + 1
+    // ids: 0 + 1
     return 3
   } else if (tokenIdSum === 2) {
     // ids 0 + 2
