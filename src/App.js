@@ -146,7 +146,7 @@ export function App() {
             href={`https://polygonscan.com/address/${CONTRACT_ADDRESS}#code`}
             target={'_blank'}
           >
-            Etherscan
+            polygonscan
           </Anchor>
           .
         </Text>
