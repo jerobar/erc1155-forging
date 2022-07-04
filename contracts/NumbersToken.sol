@@ -18,13 +18,13 @@ contract NumbersToken is ERC1155, IERC1155Receiver {
 
     string public name;
 
-    uint256 private constant ONE = 0; // 1 - Try making these public
-    uint256 private constant TWO = 1;
-    uint256 private constant THREE = 2;
-    uint256 private constant FOUR = 3;
-    uint256 private constant FIVE = 4;
-    uint256 private constant SIX = 5;
-    uint256 private constant SEVEN = 6;
+    uint256 public constant ONE = 0;
+    uint256 public constant TWO = 1;
+    uint256 public constant THREE = 2;
+    uint256 public constant FOUR = 3;
+    uint256 public constant FIVE = 4;
+    uint256 public constant SIX = 5;
+    uint256 public constant SEVEN = 6;
 
     /**
      * @dev Constructor sets `_uri` and `name` and mints one of each token to deployer.

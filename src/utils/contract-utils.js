@@ -1,4 +1,5 @@
-export const CONTRACT_ADDRESS = '0x68D42cfde88E385a1Db85510691156AC6f643477'
+// export const CONTRACT_ADDRESS = '0x68D42cfde88E385a1Db85510691156AC6f643477' Rinkeby
+export const CONTRACT_ADDRESS = '0xc158C27cD41456748cc2c77c652C1a5435eFFdf9' // Polygon
 
 export const CONTRACT_ABI = [
   { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },

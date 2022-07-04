@@ -132,17 +132,18 @@ export function App() {
   return (
     <AppShell header={<AppHeader />} padding={'md'}>
       <Container>
+        <Space h={12} />
         <Text>
           View collection on{' '}
           <Anchor
-            href={`https://testnets.opensea.io/collection/numbers-zmuhntnkld`}
+            href={`https://opensea.io/collection/numbers-p8rolf0mxo`}
             target={'_blank'}
           >
             OpenSea
           </Anchor>
           ! Browse verified contract on{' '}
           <Anchor
-            href={`https://rinkeby.etherscan.io/address/${CONTRACT_ADDRESS}#code`}
+            href={`https://polygonscan.com/address/${CONTRACT_ADDRESS}#code`}
             target={'_blank'}
           >
             Etherscan
@@ -150,7 +151,7 @@ export function App() {
           .
         </Text>
         {(!currentAccount || !chainIsPolygon) && <PleaseConnect />}
-        <Space h={20} />
+        <Space h={30} />
         <MintTokens contractRef={contractRef} />
         {currentAccount && chainIsPolygon && (
           <>

@@ -80,7 +80,7 @@ export function TradeModal(props) {
       title={`Trade for token "${tokenToTradeFor.name}"!`}
     >
       <Select
-        label={'Choose any token to trade'}
+        label={'Choose one of your tokens to trade'}
         placeholder={'Choose token'}
         itemComponent={TokenSelectItem}
         data={tokenIds

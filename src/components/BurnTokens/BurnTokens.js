@@ -140,7 +140,7 @@ export function BurnTokens(props) {
             })}
         </SimpleGrid>
       ) : (
-        <div>You have no forged tokens!</div>
+        <div style={{ textAlign: 'center' }}>You have no forged tokens!</div>
       )}
       <Button
         disabled={!tokenToBurn}

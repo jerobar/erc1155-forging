@@ -43,7 +43,7 @@ async function connect(ethereum) {
 }
 
 function chainIsPolygon(ethereum) {
-  return !!(ethereum && ethereum.chainId === NETWORKS.rinkeby.chainId)
+  return !!(ethereum && ethereum.chainId === NETWORKS.polygon.chainId)
 }
 
 async function switchToPolygon(ethereum) {
@@ -52,7 +52,7 @@ async function switchToPolygon(ethereum) {
       // Switch chain to Polygon
       await ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: NETWORKS.rinkeby.chainId }]
+        params: [{ chainId: NETWORKS.polygon.chainId }]
       })
     } catch (switchError) {
       // If Polygon chain not yet added to MetaMask
@@ -63,11 +63,11 @@ async function switchToPolygon(ethereum) {
             method: 'wallet_addEthereumChain',
             params: [
               {
-                chainId: NETWORKS.rinkeby.chainId,
-                chainName: NETWORKS.rinkeby.chainName,
-                nativeCurrency: NETWORKS.rinkeby.nativeCurrency,
-                rpcUrls: NETWORKS.rinkeby.rpcUrls,
-                blockExplorerUrls: NETWORKS.rinkeby.blockExplorerUrls
+                chainId: NETWORKS.polygon.chainId,
+                chainName: NETWORKS.polygon.chainName,
+                nativeCurrency: NETWORKS.polygon.nativeCurrency,
+                rpcUrls: NETWORKS.polygon.rpcUrls,
+                blockExplorerUrls: NETWORKS.polygon.blockExplorerUrls
               }
             ]
           })
