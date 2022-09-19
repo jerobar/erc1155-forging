@@ -1,4 +1,4 @@
-# Week 4 Assignment
+# ERC1155 Forging
 
 An ERC1155 token contract 'NumberToken' with a React front end that allows minting, trading, forging, and burning of tokens.
 

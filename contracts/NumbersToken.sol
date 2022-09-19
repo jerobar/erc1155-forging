@@ -9,12 +9,15 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 /**
  * @dev 'NumbersToken' implementation of the ERC1155 token standard.
  * Allows free minting, burning, 'forging' and trading of tokens.
+ *
+ * Note: Split this out into two contracts! on ERC1155Receieved can be called directly...
  */
 contract NumbersToken is ERC1155, IERC1155Receiver {
     using Strings for uint256;
 
     // Token id => Next possible minting timestamp
     mapping(uint256 => uint256) private _cooldowns;
+    uint256 public constant COOLDOWN_PERIOD = 1 minutes;
 
     string public name;
 
@@ -89,7 +92,7 @@ contract NumbersToken is ERC1155, IERC1155Receiver {
         );
 
         _mint(to, id, amount, "");
-        _cooldowns[id] = block.timestamp + 1 minutes;
+        _cooldowns[id] = block.timestamp + COOLDOWN_PERIOD;
     }
 
     /**
@@ -147,7 +150,7 @@ contract NumbersToken is ERC1155, IERC1155Receiver {
         uint256 value,
         bytes calldata data
     ) external override returns (bytes4) {
-        // Get token to trade for from calldata ?
+        // Get token to trade for from calldata
         _mint(operator, abi.decode(data, (uint256)), 1, "");
 
         // Return function selector if transfer is allowed

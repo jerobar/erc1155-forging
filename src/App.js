@@ -19,6 +19,7 @@ import {
   metaMaskOnDisconnect,
   fetchMaticBalance
 } from './stores/metamask-slice'
+import { metaMaskUtils } from './utils/metamask-utils'
 import { userTokenBalancesUpdated } from './stores/token-slice'
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from './utils/contract-utils'
 import { AppHeader } from './components/Layout/AppHeader'
@@ -36,18 +37,25 @@ export function App() {
   const dispatch = useDispatch()
 
   // Handle MetaMask connect event
-  const dispatchMetaMaskOnConnect = useCallback(() => {
-    dispatch(metaMaskOnConnect())
-  }, [dispatch])
+  const dispatchMetaMaskOnConnect = useCallback(
+    (connectInfo) => {
+      dispatch(metaMaskOnConnect())
+    },
+    [dispatch]
+  )
 
   // Handle MetaMask chainChanged event
-  const dispatchMetaMaskOnChainChanged = useCallback(() => {
-    dispatch(metaMaskOnChainChanged())
-  }, [dispatch])
+  const dispatchMetaMaskOnChainChanged = useCallback(
+    (chainId) => {
+      dispatch(metaMaskOnChainChanged())
+    },
+    [dispatch]
+  )
 
-  // Handle MetaMask accountsChanged event
-  const dispatchMetaMaskOnAccountsChanged = useCallback(() => {
-    dispatch(metaMaskOnAccountsChanged())
+  // Handle MetaMask accountsChanged event // returns accounts[]
+  const dispatchMetaMaskOnAccountsChanged = useCallback(async () => {
+    const accounts = await metaMaskUtils.requestAccounts()
+    dispatch(metaMaskOnAccountsChanged({ accounts }))
   }, [dispatch])
 
   // Handle MetaMask disconnect event
@@ -55,13 +63,22 @@ export function App() {
     dispatch(metaMaskOnDisconnect())
   }, [dispatch])
 
+  // Try it like this:
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     window.ethereum.on("accountsChanged", accountsChanged);
+  //     window.ethereum.on("chainChanged", chainChanged);
+  //   }
+  // }, [])
+
   // Attach/detach listeners for MetaMask events
   useEffect(() => {
     if (metaMaskIsInstalled) {
-      window.ethereum.on('connect', dispatchMetaMaskOnConnect)
-      window.ethereum.on('chainChanged', dispatchMetaMaskOnChainChanged)
+      window.ethereum.on('connect', dispatchMetaMaskOnConnect) // reload page
+      window.ethereum.on('chainChanged', dispatchMetaMaskOnChainChanged) // reload page
+      // returns accounts []
       window.ethereum.on('accountsChanged', dispatchMetaMaskOnAccountsChanged)
-      window.ethereum.on('disconnect', dispatchMetaMaskOnDisconnect)
+      window.ethereum.on('disconnect', dispatchMetaMaskOnDisconnect) // reload page
 
       return () => {
         window.ethereum.removeListener('connect', dispatchMetaMaskOnConnect)

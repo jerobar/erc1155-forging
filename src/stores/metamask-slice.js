@@ -53,7 +53,8 @@ export const metaMaskSlice = createSlice({
       state.chainIsPolygon = metaMaskUtils.chainIsPolygon(window.ethereum)
     },
     metaMaskOnAccountsChanged(state, action) {
-      state.currentAccount = null
+      const { accounts } = action.payload
+      if (accounts.length) state.currentAccount = accounts[0]
     },
     metaMaskOnDisconnect(state, action) {
       state.metaMaskIsConnected = false

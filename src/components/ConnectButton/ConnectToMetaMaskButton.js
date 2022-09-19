@@ -1,7 +1,11 @@
 import { useDispatch } from 'react-redux'
 import { Button } from '@mantine/core'
 
-import { requestAccounts } from '../../stores/metamask-slice'
+import { metaMaskUtils } from '../../utils/metamask-utils'
+import {
+  metaMaskOnConnect,
+  metaMaskOnAccountsChanged
+} from '../../stores/metamask-slice'
 import { MetaMaskIcon } from './MetaMaskIcon'
 
 export function ConnectToMetaMaskButton() {
@@ -10,7 +14,12 @@ export function ConnectToMetaMaskButton() {
 
   return (
     <Button
-      onClick={() => dispatch(requestAccounts())}
+      onClick={async () => {
+        metaMaskUtils.requestAccounts(window.ethereum).then((accounts) => {
+          dispatch(metaMaskOnConnect())
+          dispatch(metaMaskOnAccountsChanged({ accounts }))
+        })
+      }}
       alt={textContent}
       color={'cyan'}
       leftIcon={<MetaMaskIcon />}
